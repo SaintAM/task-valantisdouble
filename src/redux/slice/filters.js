@@ -12,18 +12,21 @@ export const fetchFilters = createAsyncThunk(
           action: "get_fields",
           params: { field: filterName, offset: 0 },
         });
-        const uniqueFields = Array.from(new Set(itemsFields.data.result));
+        const uniqueFields = Array.from(new Set(itemsFields.data.result)).sort(
+          (a, b) => a - b
+        );
         return uniqueFields;
       }
       return;
     } catch (error) {
       console.warn("Ошибка", error);
+      fetchFilters({ filterName });
     }
   }
 );
 
 const initialState = {
-  fields: ["-", "d"],
+  fields: [],
   status: "idle",
   filterName: "",
   filterValues: "",

@@ -12,6 +12,7 @@ export const fetchProducts = createAsyncThunk(
           params: { [filterName]: filterValues },
         });
         const uniqueIds = Array.from(new Set(getFilterIds.data.result));
+
         // Get itemsFilter
         const getItemsFilter = await axios.post("/", {
           action: "get_items",

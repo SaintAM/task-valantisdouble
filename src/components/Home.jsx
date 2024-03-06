@@ -14,21 +14,10 @@ const Home = () => {
   const [isFilter, setIsFilter] = React.useState(false);
 
   React.useEffect(() => {
-    // FilterName менять будем в ProductBlock
-
-    dispatch(fetchProducts({ isFilter, currentPage }));
-  }, [currentPage]);
-
-  React.useEffect(() => {
-    dispatch(fetchFilters({ filterName }));
-  }, [filterName]);
-
-  React.useEffect(() => {
-    setIsFilter(true)
-    dispatch(fetchProducts({ isFilter, filterName, filterValues }));
-    setIsFilter(false)
-
-  }, [filterValues]);
+    dispatch(
+      fetchProducts({ isFilter, currentPage, filterName, filterValues })
+    );
+  }, [currentPage, filterValues, isFilter]);
 
   if (!items) return <p>Загрузка...</p>;
 
@@ -43,7 +32,7 @@ const Home = () => {
         </div>
 
         <div className="filter">
-          <FiltersBlock isFilter={isFilter} />
+          <FiltersBlock setIsFilter={setIsFilter} />
         </div>
 
         <div className="body-item">

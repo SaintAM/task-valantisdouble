@@ -3,24 +3,46 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { selectFilters, setFilterName, setFilterValues } from "../../redux/slice/filters";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import {
+  fetchFilters,
+  selectFilters,
+  setFilterName,
+  setFilterValues,
+} from "../../redux/slice/filters";
 import { useDispatch, useSelector } from "react-redux";
+import styles from "./FiltersBlock.module.scss";
 
-export default function FiltersBlock({ isFilter }) {
+export default function FiltersBlock({ setIsFilter }) {
   const dispatch = useDispatch();
   const { filterValues, filterName, fields } = useSelector(selectFilters);
-
+  // цена, прайс, бренд
   const handleChangeFilter = (event) => {
     dispatch(setFilterName(event.target.value));
   };
 
+  React.useEffect(() => {
+    //получение fields
+    if (filterName) {
+      dispatch(fetchFilters({ filterName }));
+    }
+  }, [filterName]);
+
+  // Значение цены прайса, бренда
   const handleChangeField = (event) => {
     dispatch(setFilterValues(event.target.value));
+    setIsFilter(true);
+  };
+  const onClickRemove = () => {
+    setIsFilter(false);
+    dispatch(setFilterValues(""));
+    dispatch(setFilterName(""));
   };
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, minWidth: 180 }}>
+    <div className={styles.root}>
+      <FormControl sx={{ m: 0, minWidth: 180 }}>
         <InputLabel id="demo-simple-select-autowidth-label">
           Фильтрация
         </InputLabel>
@@ -38,7 +60,7 @@ export default function FiltersBlock({ isFilter }) {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ m: 1, minWidth: 180 }}>
+      <FormControl sx={{ m: 0, minWidth: 240 }}>
         <InputLabel id="demo-simple-select-autowidth-label">
           Выбирите из списка
         </InputLabel>
@@ -50,17 +72,23 @@ export default function FiltersBlock({ isFilter }) {
           autoWidth
           label="Fields"
         >
-          {!fields ? (
+          {!fields.length ? (
             <>
               <MenuItem value={""}></MenuItem>
             </>
           ) : (
-            fields.map((field, id) =>(
-              <MenuItem key={id} value={field}>{field}</MenuItem>
-						))
+            fields.map((field, id) => (
+              <MenuItem key={id} value={field}>
+                {field}
+              </MenuItem>
+            ))
           )}
         </Select>
       </FormControl>
+
+      <Button variant="outlined" color="error" onClick={onClickRemove}>
+        Очистить
+      </Button>
     </div>
   );
 }
