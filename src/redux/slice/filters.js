@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
-// может быть передадим currentPage?
 export const fetchFilters = createAsyncThunk(
   "users/fetchFilters",
   async ({ filterName }) => {

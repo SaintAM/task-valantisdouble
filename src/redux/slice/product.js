@@ -36,12 +36,10 @@ export const fetchProducts = createAsyncThunk(
       }
     } catch (error) {
       console.warn("Ошибка", error);
-      fetchProducts({ isFilter, filterName, filterValues, currentPage });
     }
   }
 );
 
-//====================================================
 const initialState = {
   items: [],
   currentPage: 1,

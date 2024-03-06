@@ -4,36 +4,34 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import styles from "./FiltersBlock.module.scss";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchFilters,
   selectFilters,
   setFilterName,
   setFilterValues,
 } from "../../redux/slice/filters";
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./FiltersBlock.module.scss";
 
 export default function FiltersBlock({ setIsFilter }) {
   const dispatch = useDispatch();
   const { filterValues, filterName, fields } = useSelector(selectFilters);
-  // цена, прайс, бренд
+
   const handleChangeFilter = (event) => {
     dispatch(setFilterName(event.target.value));
   };
 
   React.useEffect(() => {
-    //получение fields
     if (filterName) {
       dispatch(fetchFilters({ filterName }));
     }
   }, [filterName]);
 
-  // Значение цены прайса, бренда
   const handleChangeField = (event) => {
     dispatch(setFilterValues(event.target.value));
     setIsFilter(true);
   };
+
   const onClickRemove = () => {
     setIsFilter(false);
     dispatch(setFilterValues(""));
@@ -91,17 +89,4 @@ export default function FiltersBlock({ setIsFilter }) {
       </Button>
     </div>
   );
-}
-
-{
-  /* <InputLabel id="demo-simple-select-disabled-label">-</InputLabel>
-<Select
-	labelId="demo-simple-select-disabled-label"
-	id="demo-simple-select-disabled"
-	label="-"
->
-	<MenuItem value="">
-		<em>None</em>
-	</MenuItem>
-</Select> */
 }

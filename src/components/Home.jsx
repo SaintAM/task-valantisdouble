@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "./ProductBlock/Skeleton";
 import ProductBlock from "./ProductBlock";
 import { fetchProducts, selectProducts } from "../redux/slice/product";
-import { fetchFilters, selectFilters } from "../redux/slice/filters";
+import { selectFilters } from "../redux/slice/filters";
 import PaginationBase from "./Pagination";
 import FiltersBlock from "./FiltersBlock";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { items, status, currentPage } = useSelector(selectProducts);
-  const { filterValues, fields, filterName } = useSelector(selectFilters);
+  const { filterValues, filterName } = useSelector(selectFilters);
   const [isFilter, setIsFilter] = React.useState(false);
 
   React.useEffect(() => {
