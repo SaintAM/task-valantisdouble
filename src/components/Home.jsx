@@ -6,6 +6,7 @@ import { fetchProducts, selectProducts } from "../redux/slice/product";
 import { selectFilters } from "../redux/slice/filters";
 import PaginationBase from "./Pagination";
 import FiltersBlock from "./FiltersBlock";
+import ItemMUI from "./ProductBlock/ItemMUI";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const Home = () => {
 
   if (!items) return <p>Загрузка...</p>;
 
-  const products = items.map((obj, i) => <ProductBlock key={i} {...obj} />);
+  const products = items.map((obj, i) => <ItemMUI key={i} {...obj} />);
   const skeletons = [...new Array(50)].map((_, i) => <Skeleton key={i} />);
 
   return (
