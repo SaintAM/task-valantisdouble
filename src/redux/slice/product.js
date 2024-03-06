@@ -47,11 +47,11 @@ const asyncFetchData = async ({
     });
   }
 };
+
 export const fetchProducts = createAsyncThunk(
   "users/fetchProducts",
   asyncFetchData
 );
-
 
 const initialState = {
   items: [],

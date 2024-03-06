@@ -12,6 +12,7 @@ import {
   setFilterName,
   setFilterValues,
 } from "../../redux/slice/filters";
+import { setCurrentPage } from "../../redux/slice/product";
 
 export default function FiltersBlock({ setIsFilter }) {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export default function FiltersBlock({ setIsFilter }) {
 
   const handleChangeField = (event) => {
     dispatch(setFilterValues(event.target.value));
+    dispatch(setCurrentPage(1));
     setIsFilter(true);
   };
 
@@ -36,6 +38,7 @@ export default function FiltersBlock({ setIsFilter }) {
     setIsFilter(false);
     dispatch(setFilterValues(""));
     dispatch(setFilterName(""));
+    dispatch(setCurrentPage(1));
   };
 
   return (

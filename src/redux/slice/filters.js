@@ -1,28 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
-export const fetchFilters = createAsyncThunk(
-  "users/fetchFilters",
-  async ({ filterName }) => {
-    try {
-      if (filterName) {
-        // Get itemsFields
-        const itemsFields = await axios.post("/", {
-          action: "get_fields",
-          params: { field: filterName, offset: 0 },
-        });
-        const uniqueFields = Array.from(new Set(itemsFields.data.result)).sort(
-          (a, b) => a - b
-        );
-        return uniqueFields;
-      }
-      return;
-    } catch (error) {
-      console.warn("Ошибка", error);
-      fetchFilters({ filterName });
+const asyncFields = async ({ filterName }) => {
+  try {
+    if (filterName) {
+      // Get itemsFields
+      const itemsFields = await axios.post("/", {
+        action: "get_fields",
+        params: { field: filterName, offset: 0 },
+      });
+      const uniqueFields = Array.from(new Set(itemsFields.data.result)).sort(
+        (a, b) => a - b
+      );
+      return uniqueFields;
     }
+    return;
+  } catch (error) {
+    console.warn("Ошибка", error);
+    await asyncFields({ filterName });
   }
-);
+};
+
+export const fetchFilters = createAsyncThunk("users/fetchFilters", asyncFields);
 
 const initialState = {
   fields: [],
