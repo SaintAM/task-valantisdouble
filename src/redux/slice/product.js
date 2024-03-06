@@ -52,44 +52,6 @@ export const fetchProducts = createAsyncThunk(
   asyncFetchData
 );
 
-// export const fetchProducts = createAsyncThunk(
-//   "users/fetchProducts",
-//   async ({ isFilter, filterName, filterValues, currentPage }) => {
-//     try {
-//       if (isFilter) {
-//         // Get ids filter
-//         const getFilterIds = await axios.post("/", {
-//           action: "filter",
-//           params: { [filterName]: filterValues },
-//         });
-//         const uniqueIds = Array.from(new Set(getFilterIds.data.result));
-
-//         // Get itemsFilter
-//         const getItemsFilter = await axios.post("/", {
-//           action: "get_items",
-//           params: { ids: uniqueIds },
-//         });
-//         return getItemsFilter.data.result;
-//       } else {
-//         const start = currentPage <= 1 ? 1 : currentPage * 50;
-//         // Get ids
-//         const getIds = await axios.post("/", {
-//           action: "get_ids",
-//           params: { offset: start, limit: 50 },
-//         });
-//         const uniqueIds = Array.from(new Set(getIds.data.result));
-//         // Get items
-//         const getItems = await axios.post("/", {
-//           action: "get_items",
-//           params: { ids: uniqueIds },
-//         });
-//         return getItems.data.result;
-//       }
-//     } catch (error) {
-//       console.warn("Ошибка", error);
-//     }
-//   }
-// );
 
 const initialState = {
   items: [],

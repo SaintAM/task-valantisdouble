@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "./ProductBlock/Skeleton";
-import ProductBlock from "./ProductBlock";
 import { fetchProducts, selectProducts } from "../redux/slice/product";
 import { selectFilters } from "../redux/slice/filters";
 import PaginationBase from "./Pagination";
